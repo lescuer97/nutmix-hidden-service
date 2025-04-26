@@ -3,23 +3,56 @@ services:
     container_name: hidden-service
     build: ./tor/
     depends_on:
-      - webserver
+      - mint
     networks:
-      - my-network
+      - inner-network
 
-  webserver:
-    container_name: shopstr
-    build: ./shopstr/
+  mint:
+    environment:
+      DOCKER: "true"
+    container_name: nutmix
+    build: ./nutmix/
+    ports:
+      - 8080:8080
+    restart: on-failure:10
+    depends_on:
+      - mint-db
+    volumes:
+      - /var/log/nutmix:/var/log/nutmix
+      - ${HOME}/.config/nutmix:/root/.config/nutmix
     networks:
-      my-network:
-        ipv4_address: 172.18.0.6
+      inner-network:
+        ipv4_address: 172.22.0.6
+
+  mint-db:
+    image: postgres:16.8
+    restart: always
+    ports:
+      - 127.0.0.1:5432:5432
+    volumes: 
+      - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    networks:
+      inner-network:
+        ipv4_address: 172.22.0.7
+
 
 
 networks:
-  my-network:
+  inner-network:
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: 172.18.0.0/16
-          gateway: 172.18.0.1
+        - subnet: 172.22.0.0/16
+          gateway: 172.22.0.1
+volumes:
+  db:
+    driver: local

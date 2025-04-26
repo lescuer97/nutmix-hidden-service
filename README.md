@@ -2,7 +2,7 @@
 
 ## Set-up Instructions
 
-Follow these steps to get the Shopstr Hidden Service running on your local machine:
+Follow these steps to get the Nutmix Hidden Service running on your local machine:
 
 ### 1. Clone the repository
 

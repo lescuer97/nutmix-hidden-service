@@ -1,12 +1,8 @@
-FROM ubuntu:latest
+FROM alpine:latest
 
 MAINTAINER GIT
 
-RUN apt-get update -y
-
-RUN apt-get upgrade -y
-
-RUN apt-get install tor -y
+RUN apk update && apk add --no-cache tor
 
 COPY torrc /etc/tor/torrc
                     
