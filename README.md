@@ -7,18 +7,21 @@ Follow these steps to get the Nutmix Hidden Service running on your local machin
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/shopstr-eng/shopstr-hidden-service.git
-cd shopstr-hidden-service
+git clone https://github.com/lescuer97/nutmix-hidden-service
+cd nutmix-hidden-service
 ```
 
-### 2. Set up the Shopstr repository
+### 2. Set up the nutmix repository
 
 ```bash
-cd shopstr
-git init
-git remote add origin https://github.com/shopstr-eng/shopstr.git
-git fetch
-git checkout origin/main -ft
+git submodule sync --recursive .
+```
+### 2.1 Set up the .env file
+
+Setup your .env file inside the nutmix repo. You can follow the env.example file.
+
+```bash
+cd nutmix
 ```
 
 ### 3. Build and deploy the Hidden Service
@@ -36,13 +39,13 @@ Example output: `z64bvbz2niptamub2lzqnyyuycmsdokkffpak5x5uddsyd427dx7qqad.onion`
 
 ## Update Instructions
 
-Follow these steps to update your deployment to the latest version of Shopstr:
+Follow these steps to update your deployment to the latest version of nutmix:
 
 ### 1. Pull the latest changes
 
 ```bash
-cd shopstr-hidden-service
-cd shopstr
+cd nutmix-hidden-service
+cd nutmix
 git pull
 ```
 ### 2. Rebuild and redoply the Hidden Service
