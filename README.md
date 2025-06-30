@@ -1,4 +1,4 @@
-# shopstr-hidden-service
+# Nutmix-hidden-service
 
 ## Set-up Instructions
 
